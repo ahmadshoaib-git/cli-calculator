@@ -1,16 +1,29 @@
 {
-  "name": "cli-calculator",
-  "version": "1.0.0",
-  "description": "",
+  "name": "mini-cli-calculator",
+  "version": "1.1.2",
+  "description": "CLI Calculator developed using latest version of ecmascript, typescript and nodeJs ",
+  "author": "Ahmad Shoaib",
   "type": "module",
-  "main": "index.js",
+  "main": "./build/index.js",
+  "bin": "./build/index.js",
   "scripts": {
     "start": "npx nodemon",
     "dev": "npx ts-node ./src/index.ts",
+    "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Javascript",
+    "Typescript",
+    "ES2022",
+    "Cli",
+    "Calculator",
+    "Basic Cli Calculator"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmadshoaib-git/cli-calculator"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/chalk": "^2.2.0",
