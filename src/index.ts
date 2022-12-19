@@ -1,5 +1,4 @@
-#!usr/bin/env node
-
+#!/usr/bin/env node
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import chalkAnimation from 'chalk-animation';
@@ -16,6 +15,11 @@ const colorText = (color: colorType, text: string): string => {
 };
 
 const sleep = () => new Promise((res) => setTimeout(res, 2000));
+
+const validateNumber = (input: number): string | boolean => {
+    if (typeof input !== 'number' || isNaN(input)) return colorText('red', `☠️☠️ Please enter a valid number!`);
+    else return true;
+};
 
 const welcomePrompt = async () => {
     let calculatorTitle = chalkAnimation.rainbow('Welcome! Lets start Calculation');
@@ -44,41 +48,37 @@ const welcomePrompt = async () => {
 };
 
 const calculatorQuestions = async () => {
-    const ans = await inquirer.prompt([
+    const questions = [
         {
             type: 'list',
             name: 'operator',
-            message: colorText('yellow', '\nWhich operation would you like to perform'),
-            choices: ['Addition', 'Subtraction', 'Multiplication', 'Division'],
+            message: colorText('yellow', '\nWhich operation would you like to perform \n'),
+            choices: ['+ Addition', '- Subtraction', '* Multiplication', '/ Division'],
         },
         {
             type: 'number',
             name: 'num1',
             message: colorText('vanilla', 'Enter the first number:'),
-            validate: (input) => {
-                if (typeof input !== 'number' || isNaN(input)) return false;
-                else return true;
-            },
+            validate: (input: number) => validateNumber(input),
         },
         {
             type: 'number',
             name: 'num2',
             message: colorText('vanilla', 'Enter the second number:'),
-            validate: (input) => {
-                if (typeof input !== 'number' || isNaN(input)) return false;
-                else return true;
-            },
+            validate: (input: number) => validateNumber(input),
         },
-    ]);
-    if (ans.operator == 'Addition') {
-        console.log(colorText('green', `${ans.num1} + ${ans.num2} = ${ans.num1 + ans.num2}`));
-    } else if (ans.operator == 'Subtraction') {
-        console.log(colorText('green', `${ans.num1} - ${ans.num2} = ${ans.num1 - ans.num2}`));
-    } else if (ans.operator == 'Multiplication') {
-        console.log(colorText('green', `${ans.num1} * ${ans.num2} = ${ans.num1 * ans.num2}`));
-    } else if (ans.operator == 'Division') {
-        console.log(colorText('green', `${ans.num1} / ${ans.num2} = ${ans.num1 / ans.num2}`));
-    }
+    ];
+    await inquirer.prompt(questions).then((ans) => {
+        if (ans.operator == '+ Addition') {
+            console.log(colorText('green', `${ans.num1} + ${ans.num2} = ${ans.num1 + ans.num2}`));
+        } else if (ans.operator == '- Subtraction') {
+            console.log(colorText('green', `${ans.num1} - ${ans.num2} = ${ans.num1 - ans.num2}`));
+        } else if (ans.operator == '* Multiplication') {
+            console.log(colorText('green', `${ans.num1} * ${ans.num2} = ${ans.num1 * ans.num2}`));
+        } else if (ans.operator == '/ Division') {
+            console.log(colorText('green', `${ans.num1} / ${ans.num2} = ${ans.num1 / ans.num2}`));
+        }
+    });
 };
 
 const calculator = async () => {
@@ -89,7 +89,7 @@ const calculator = async () => {
             var again = await inquirer.prompt({
                 type: 'input',
                 name: 'restart',
-                message: colorText('yellow', 'Do you wish to continue? Press y or n:\n'),
+                message: colorText('yellow', '\nDo you wish to continue? Press y or n: '),
             });
         } while (again.restart == 'y' || again.restart == 'Y' || again.restart == 'yes' || again.restart == 'YES');
     } catch (err) {
