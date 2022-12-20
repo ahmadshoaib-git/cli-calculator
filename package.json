@@ -1,6 +1,6 @@
 {
   "name": "mini-cli-calculator",
-  "version": "1.1.8",
+  "version": "1.2.1",
   "description": "CLI Calculator developed using latest version of ecmascript, typescript and nodeJs ",
   "author": "Ahmad Shoaib",
   "type": "module",
