@@ -1,25 +1,7 @@
 #!/usr/bin/env node
 import inquirer from 'inquirer';
-import chalk from 'chalk';
 import chalkAnimation from 'chalk-animation';
-
-type colorType = 'brown' | 'yellow' | 'green' | 'vanilla' | 'red';
-
-const colorText = (color: colorType, text: string): string => {
-    if (color === 'brown') return chalk.rgb(205, 127, 50)(text);
-    else if (color === 'yellow') return chalk.rgb(181, 166, 66)(text);
-    else if (color === 'green') return chalk.rgb(158, 253, 56)(text);
-    else if (color === 'vanilla') return chalk.rgb(160, 82, 45)(text);
-    else if (color === 'red') return chalk.rgb(168, 28, 7)(text);
-    return text;
-};
-
-const sleep = () => new Promise((res) => setTimeout(res, 2000));
-
-const validateNumber = (input: number): string | boolean => {
-    if (typeof input !== 'number' || isNaN(input)) return colorText('red', `☠️☠️ Please enter a valid number!`);
-    else return true;
-};
+import { sleep, colorText, validateNumber, ColorType } from './utils.js';
 
 const welcomePrompt = async () => {
     let calculatorTitle = chalkAnimation.rainbow('Welcome! Lets start Calculation');
@@ -27,7 +9,7 @@ const welcomePrompt = async () => {
     calculatorTitle.stop();
     console.log(
         colorText(
-            'yellow',
+            ColorType.YELLOW,
             `     _____________________
     |  _________________  |
     | | JO           0. | |
@@ -52,32 +34,27 @@ const calculatorQuestions = async () => {
         {
             type: 'list',
             name: 'operator',
-            message: colorText('yellow', '\nWhich operation would you like to perform \n'),
+            message: colorText(ColorType.YELLOW, '\nWhich operation would you like to perform \n'),
             choices: ['+ Addition', '- Subtraction', '* Multiplication', '/ Division'],
         },
         {
             type: 'number',
             name: 'num1',
-            message: colorText('vanilla', 'Enter the first number:'),
+            message: colorText(ColorType.ORANGE, 'Enter the first number:'),
             validate: (input: number) => validateNumber(input),
         },
         {
             type: 'number',
             name: 'num2',
-            message: colorText('vanilla', 'Enter the second number:'),
+            message: colorText(ColorType.ORANGE, 'Enter the second number:'),
             validate: (input: number) => validateNumber(input),
         },
     ];
     await inquirer.prompt(questions).then((ans) => {
-        if (ans.operator == '+ Addition') {
-            console.log(colorText('green', `${ans.num1} + ${ans.num2} = ${ans.num1 + ans.num2}`));
-        } else if (ans.operator == '- Subtraction') {
-            console.log(colorText('green', `${ans.num1} - ${ans.num2} = ${ans.num1 - ans.num2}`));
-        } else if (ans.operator == '* Multiplication') {
-            console.log(colorText('green', `${ans.num1} * ${ans.num2} = ${ans.num1 * ans.num2}`));
-        } else if (ans.operator == '/ Division') {
-            console.log(colorText('green', `${ans.num1} / ${ans.num2} = ${ans.num1 / ans.num2}`));
-        }
+        if (ans.operator == '+ Addition') console.log(colorText(ColorType.GREEN, `${ans.num1} + ${ans.num2} = ${ans.num1 + ans.num2}`));
+        else if (ans.operator == '- Subtraction') console.log(colorText(ColorType.GREEN, `${ans.num1} - ${ans.num2} = ${ans.num1 - ans.num2}`));
+        else if (ans.operator == '* Multiplication') console.log(colorText(ColorType.GREEN, `${ans.num1} * ${ans.num2} = ${ans.num1 * ans.num2}`));
+        else if (ans.operator == '/ Division') console.log(colorText(ColorType.GREEN, `${ans.num1} / ${ans.num2} = ${ans.num1 / ans.num2}`));
     });
 };
 
@@ -89,11 +66,11 @@ const calculator = async () => {
             var again = await inquirer.prompt({
                 type: 'input',
                 name: 'restart',
-                message: colorText('yellow', '\nDo you wish to continue? Press y or n: '),
+                message: colorText(ColorType.YELLOW, '\nDo you wish to continue? Press y or n: '),
             });
         } while (again.restart == 'y' || again.restart == 'Y' || again.restart == 'yes' || again.restart == 'YES');
     } catch (err) {
-        console.log(colorText('red', err?.message || ''));
+        console.log(colorText(ColorType.RED, err?.message || ''));
     }
 };
 
