@@ -1,6 +1,6 @@
 {
   "name": "mini-cli-calculator",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "CLI Calculator developed using latest version of ecmascript, typescript and nodeJs ",
   "author": "Ahmad Shoaib",
   "type": "module",
@@ -24,7 +24,7 @@
     "type": "git",
     "url": "https://github.com/ahmadshoaib-git/cli-calculator"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/chalk-animation": "^1.6.1",
